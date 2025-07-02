@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ treatment.title }} - Treatment{% endblock %}
+
+{% block content %}
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">{{ treatment.title }}</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb text-uppercase mb-0">
+                <li class="breadcrumb-item"><a class="text-white" href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="{% url 'treatment' %}">Treatments</a></li>
+                <li class="breadcrumb-item text-primary active" aria-current="page">{{ treatment.title }}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Treatment Detail Section -->
+<div class="container py-5">
+    <div class="row g-5">
+        <!-- Image/Icon -->
+        <div class="col-md-5 mb-4">
+            {% if treatment.image %}
+                <img src="{{ treatment.image.url }}" alt="{{ treatment.title }}" style="height: 300px;" class="img-fluid rounded shadow-sm d-block mx-auto">
+            {% else %}
+                <div class="bg-light d-flex align-items-center justify-content-center rounded"
+                     style="height: 300px;">
+                    <i class="{{ treatment.icon_class }} text-primary fs-1"></i>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Details -->
+        <div class="col-md-7">
+            <h2 class="mb-3">{{ treatment.title }}</h2>
+            <p class="text-muted">{{ treatment.description }}</p>
+
+            <!-- Benefits Section -->
+            <h5 class="mt-4 mb-3">Benefits of {{ treatment.title }}</h5>
+            <ul class="list-group mb-4">
+                <li class="list-group-item">
+                    <i class="fa fa-check-circle text-success me-2"></i> Safe and natural remedies
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-check-circle text-success me-2"></i> Personalized treatment plans
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-check-circle text-success me-2"></i> Effective for chronic conditions
+                </li>
+            </ul>
+
+            <a href="{% url 'treatment' %}" class="btn btn-outline-primary">
+                <i class="fa fa-arrow-left me-2"></i>Back to Treatments
+            </a>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="accordion mt-5" id="faqAccordion">
+        <h4 class="mb-3">Frequently Asked Questions</h4>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faqOneHeading">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                    Is homeopathy safe for long-term use?
+                </button>
+            </h2>
+            <div id="faqOne" class="accordion-collapse collapse show" aria-labelledby="faqOneHeading"
+                 data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Yes, homeopathy uses natural remedies and is safe even for chronic conditions when prescribed correctly.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faqTwoHeading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
+                    How long does treatment usually take?
+                </button>
+            </h2>
+            <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faqTwoHeading"
+                 data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    It depends on the condition and the individual's response. Some see results in weeks; others may take months.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Appointments</h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <!-- <th>Email</th> -->
+                  <th>Phone</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Message</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for app in appointments %}
+                <tr>
+                  <td>{{ app.name }}</td>
+                  <!-- <td>{{ app.email }}</td> -->
+                  <td>{{ app.phone }}</td>
+                  <td>{{ app.date }}</td>
+                  <td>{{ app.time }}</td>
+                  <td>{{ app.message }}</td>
+                  <td>
+                    {% if not app.is_confirmed %}
+                      <label class="badge badge-danger">Pending</label>
+                    {% else %}
+                      <label class="badge badge-success">Completed</label>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if not app.is_confirmed %}
+                      {% if user.is_superuser %}
+                      <form method="post" action="{% url 'confirm_appointment' app.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-success">Confirm</button>
+                      </form>
+                      {% else %}
+                      <span class="text-danger">Admin only</span>
+                      {% endif %}
+                    {% else %}
+                      <span class="text-muted">Confirmed</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

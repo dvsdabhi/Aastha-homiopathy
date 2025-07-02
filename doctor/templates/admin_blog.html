@@ -1,0 +1,53 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+<div class="content-wrapper">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="card-title">All Blogs</h4>
+    <a href="{% url 'admin_add_blog' %}" class="btn btn-success">+ Add Blog</a>
+  </div>
+
+  <!-- 🔍 Search box -->
+  <div class="form-group mb-4">
+    <input type="text" class="form-control" id="blogSearch" placeholder="Search blogs...">
+  </div>
+
+  <div class="row" id="blogContainer">
+    {% for blog in blogs %}
+    <div class="col-md-4 blog-card mb-4">
+      <div class="card h-100">
+        {% if blog.image %}
+        <img src="{{ blog.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title blog-title">{{ blog.title }}</h5>
+          <p class="card-text text-muted blog-content">{{ blog.content|truncatechars:100 }}</p>
+          <a href="{% url 'admin_edit_blog' blog.id %}" class="btn btn-sm btn-primary">Edit</a>
+          <a href="{% url 'admin_delete_blog' blog.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this blog?')">Delete</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>No blogs found.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- 🔍 Live JS Filter -->
+<script>
+  const blogSearchInput = document.getElementById('blogSearch');
+  blogSearchInput.addEventListener('keyup', function () {
+    const query = this.value.toLowerCase();
+    const blogCards = document.querySelectorAll('.blog-card');
+
+    blogCards.forEach(card => {
+      const title = card.querySelector('.blog-title').textContent.toLowerCase();
+      const content = card.querySelector('.blog-content').textContent.toLowerCase();
+      if (title.includes(query) || content.includes(query)) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+</script>
+{% endblock %}

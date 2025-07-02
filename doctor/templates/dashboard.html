@@ -1,0 +1,73 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+<div class="content-wrapper">
+  <div class="row">
+    <!-- Total Appointments -->
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <h4 class="card-title">Total Appointments</h4>
+          <h2>{{ total_appointments }}</h2>
+          <p class="text-white">All submitted appointments</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmed Appointments -->
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <h4 class="card-title">Confirmed Appointments</h4>
+          <h2>{{ confirmed_appointments }}</h2>
+          <p class="text-white">Appointments marked as confirmed</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Treatments -->
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-info text-white">
+        <div class="card-body">
+          <h4 class="card-title">Total Treatments</h4>
+          <h2>{{ total_treatments }}</h2>
+          <p class="text-white">All added treatments</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Blogs -->
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-warning text-white">
+        <div class="card-body">
+          <h4 class="card-title">Total Blogs</h4>
+          <h2>{{ total_blogs }}</h2>
+          <p class="text-white">Blog posts added</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Categories -->
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-danger text-white">
+        <div class="card-body">
+          <h4 class="card-title">Total Categories</h4>
+          <h2>{{ total_categories }}</h2>
+          <p class="text-white">Treatment categories available</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Contact Messages -->
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-light text-white">
+        <div class="card-body">
+          <h4 class="card-title">Contact Messages</h4>
+          <h2>{{ total_contact }}</h2>
+          <p class="text-white">Messages from contact form</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

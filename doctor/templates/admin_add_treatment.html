@@ -1,0 +1,45 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Add Treatment</h4>
+      <p class="card-description"> Fill treatment details </p>
+
+      <form class="forms-sample" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select name="category" class="form-select" required>
+            <option value="">-- Select Category --</option>
+            {% for cat in categories %}
+              <option value="{{ cat.id }}">{{ cat.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" name="title" class="form-control" placeholder="Enter treatment title">
+        </div>
+
+        <div class="form-group">
+          <label for="image">Upload Image</label>
+          <input type="file" name="image" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea name="description" class="form-control" rows="4" placeholder="Enter description"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary me-2">Submit</button>
+        <a href="{% url 'admin_treatments' %}" class="btn btn-light">Cancel</a>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

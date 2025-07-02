@@ -1,0 +1,65 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+<div class="content-wrapper">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="card-title">All Treatments by Category</h4>
+    <a href="{% url 'admin_add_treatment' %}" class="btn btn-success">+ Add Treatment</a>
+  </div>
+
+  <!-- 🔍 Search input -->
+  <div class="form-group mb-4">
+    <input type="text" class="form-control" id="treatmentSearch" placeholder="Search treatments...">
+  </div>
+
+  {% for category in categories %}
+    <div class="mb-4">
+      <h5 class="text-success mb-3">➤ {{ category.name }}</h5>
+      <div class="row treatment-group">
+        {% for treatment in category.treatments.all %}
+          <div class="col-md-4 grid-margin stretch-card treatment-card">
+            <div class="card h-100">
+              <div class="card-body">
+                {% if treatment.image %}
+                  <img src="{{ treatment.image.url }}" class="img-fluid rounded mb-3" style="height: 180px; width: 100%; object-fit: cover;">
+                {% else %}
+                  <div class="bg-light text-center p-5 rounded mb-3" style="height: 180px;">No Image</div>
+                {% endif %}
+                <h5 class="card-title treatment-title">{{ treatment.title }}</h5>
+                <p class="card-text text-muted treatment-desc">{{ treatment.description|truncatechars:100 }}</p>
+                <div class="d-flex justify-content-between">
+                  <a href="{% url 'update_treatment' treatment.id %}" class="btn btn-sm btn-primary">Edit</a>
+                  <a href="{% url 'admin_delete_treatment' treatment.id %}" class="btn btn-sm btn-danger"
+                     onclick="return confirm('Delete this treatment?')">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="col-12">
+            <div class="alert alert-warning">No treatments found in this category.</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- 🧠 JavaScript filter -->
+<script>
+  const searchInput = document.getElementById('treatmentSearch');
+  searchInput.addEventListener('keyup', function () {
+    const query = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.treatment-card');
+
+    cards.forEach(card => {
+      const title = card.querySelector('.treatment-title').textContent.toLowerCase();
+      const desc = card.querySelector('.treatment-desc').textContent.toLowerCase();
+      if (title.includes(query) || desc.includes(query)) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+</script>
+{% endblock %}
