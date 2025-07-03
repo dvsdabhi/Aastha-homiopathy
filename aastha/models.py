@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -14,6 +14,7 @@ class ContactMessage(models.Model):
         return f"{self.name} - {self.subject}"
 
 class Appointment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # allow null for existing data
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
@@ -50,6 +51,15 @@ class Blog(models.Model):
     content = models.TextField()
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)    
 
     def __str__(self):
         return self.title
+
+class Patient(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField(unique=True)
+    mobile = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.user.username

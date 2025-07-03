@@ -10,19 +10,19 @@
                 <div class="row g-4">
                     <div class="col-sm-4">
                         <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">123</h2>
-                            <p class="text-light mb-0">Expert Doctors</p>
+                            <h2 class="text-white mb-1" data-toggle="counter-up">25</h2>
+                            <p class="text-light mb-0">Treatments</p>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">1234</h2>
-                            <p class="text-light mb-0">Medical Stuff</p>
+                            <h2 class="text-white mb-1" data-toggle="counter-up">2</h2>
+                            <p class="text-light mb-0">Year Experience</p>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">12345</h2>
+                            <h2 class="text-white mb-1" data-toggle="counter-up">500</h2>
                             <p class="text-light mb-0">Total Patients</p>
                         </div>
                     </div>
@@ -89,66 +89,25 @@
                 <h1>Health Care Solutions</h1>
             </div>
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
+                {% for treatment in total_treatments %}
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ treatment.delay }}">
+                        <div class="service-item bg-light rounded h-100 p-5">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
+                                <img src="{{ treatment.image.url }}" alt="" width="64" height="64" class="img-icon-style">
+                            </div>
+                            <h4 class="mb-3">{{ treatment.title }}</h4>
+                            <p class="mb-4">{{ treatment.description|truncatechars:100 }}</p>
+                            <a class="btn" href="{% url 'treatment_detail' treatment.id %}">
+                                <i class="fa fa-plus text-primary me-3"></i>Read More
+                              </a>
                         </div>
-                        <h4 class="mb-3">Cardiology</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-x-ray text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Pulmonary</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-brain text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Neurology</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Orthopedics</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-tooth text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Dental Surgery</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-vials text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Laboratory</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mx-auto mt-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <a href="{% url 'treatment' %}">
+                    <p class="d-inline-block border rounded-pill py-1 px-4">View All</p>
+                </a>
             </div>
         </div>
     </div>

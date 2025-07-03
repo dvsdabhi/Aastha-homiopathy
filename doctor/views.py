@@ -5,9 +5,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout
 from django.db.models import Q
+from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def dashboard(request):
     total_appointments = Appointment.objects.count()
@@ -27,11 +29,13 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', context)
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def appointments(request):
     appointments = Appointment.objects.all().order_by('-date')
     return render(request, 'admin_appointments.html', {'appointments': appointments})
 
+@staff_member_required
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def confirm_appointment(request, id):
@@ -67,6 +71,7 @@ def confirm_appointment(request, id):
 
     return redirect('admin_appointments')
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def treatments(request):
     query = request.GET.get('q', '')
@@ -85,6 +90,7 @@ def treatments(request):
         'query': query
     })
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def add_treatment(request):
     categories = TreatmentCategory.objects.all()
@@ -107,6 +113,7 @@ def add_treatment(request):
 
     return render(request, 'admin_add_treatment.html', {'categories': categories})
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def update_treatment(request, id):
     treatment = get_object_or_404(Treatment, id=id)
@@ -129,13 +136,14 @@ def update_treatment(request, id):
         'categories': categories
     })
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def delete_treatment(request, id):
     treatment = get_object_or_404(Treatment, id=id)
     treatment.delete()
     return redirect('admin_treatments')
 
-
+@staff_member_required
 @login_required(login_url='admin_login')
 def blogs(request):
     query = request.GET.get('q')
@@ -145,6 +153,7 @@ def blogs(request):
         blogs = Blog.objects.all().order_by('-created_at')
     return render(request, 'admin_blog.html', {'blogs': blogs, 'query': query})
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def add_blog(request):
     if request.method == 'POST':
@@ -161,6 +170,7 @@ def add_blog(request):
 
     return render(request, 'admin_add_blog.html')
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def update_blog(request, id):
     blog = get_object_or_404(Blog, id=id)
@@ -175,6 +185,7 @@ def update_blog(request, id):
 
     return render(request, 'admin_update_blog.html', {'blog': blog})
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def delete_blog(request, id):
     blog = get_object_or_404(Blog, id=id)
@@ -201,6 +212,7 @@ def login(request):
 def register(request):
     return render(request, 'register.html')
 
+@staff_member_required
 @login_required(login_url='admin_login')
 def contact(request):
     contact = ContactMessage.objects.all()

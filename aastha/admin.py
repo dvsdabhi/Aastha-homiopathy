@@ -8,6 +8,8 @@ from django.conf import settings
 admin.site.register(ContactMessage)
 admin.site.register(TreatmentCategory)
 admin.site.register(Treatment)
+admin.site.register(Blog)
+admin.site.register(Patient)
 
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = ['name', 'email', 'date', 'time', 'is_confirmed']
