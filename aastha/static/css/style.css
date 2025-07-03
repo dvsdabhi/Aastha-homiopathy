@@ -517,3 +517,11 @@
 .footer .copyright a:hover {
     color: var(--primary);
 }
+
+body {
+    overflow-x: hidden;
+}
+.nav-item.dropdown .dropdown-menu {
+    min-width: 200px;  /* or set to auto */
+    right: 0;
+}

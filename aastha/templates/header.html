@@ -71,8 +71,8 @@
             <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
 
             <!-- 🔐 User Account Dropdown -->
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+            <div class="nav-item dropdown position-relative">
+                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-user-circle fa-lg me-1"></i>
                     {% if user.is_authenticated %}
                         <span>{{ user.username }}</span>
@@ -80,18 +80,18 @@
                         <span>Account</span>
                     {% endif %}
                 </a>
-                <div class="dropdown-menu dropdown-menu-end m-0">
+                <ul class="dropdown-menu dropdown-menu-end m-0">
                     {% if user.is_authenticated %}
-                        <a class="dropdown-item" href="{% url 'my_appointments' %}">My Appointments</a>
-                        <a class="dropdown-item" href="{% url 'appointment' %}">Book Appointment</a>
-                        <hr class="dropdown-divider">
-                        <a class="dropdown-item text-danger" href="{% url 'patient_logout' %}">Sign Out</a>
+                        <li><a class="dropdown-item" href="{% url 'my_appointments' %}">My Appointments</a></li>
+                        <li><a class="dropdown-item" href="{% url 'appointment' %}">Book Appointment</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'patient_logout' %}">Sign Out</a></li>
                     {% else %}
-                        <a class="dropdown-item" href="{% url 'patient_login' %}">Login</a>
-                        <a class="dropdown-item" href="{% url 'patient_register' %}">Register</a>
+                        <li><a class="dropdown-item" href="{% url 'patient_login' %}">Login</a></li>
+                        <li><a class="dropdown-item" href="{% url 'patient_register' %}">Register</a></li>
                     {% endif %}
-                </div>
-            </div>
+                </ul>
+            </div>            
         </div>
     </div>
 </nav>
