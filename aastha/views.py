@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import ContactForm
-from .models import Appointment, Treatment, Blog, Patient
+from .models import Appointment, Treatment, Blog, Patient, Review
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -13,9 +13,11 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     treatment = Treatment.objects.order_by('?')[:3]
+    reviews = Review.objects.order_by('?')[:3]
 
     context = {
         'total_treatments': treatment,
+        'reviews': reviews,
     }
     return render(request,'index.html', context)
 
@@ -169,3 +171,34 @@ def patient_login(request):
 def patient_logout(request):
     logout(request)
     return redirect('patient_login')
+
+@login_required
+def review_page(request):
+    reviews = Review.objects.all().order_by('-created_at')
+
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+
+        if rating and comment:
+            # Check if user has already submitted a review
+            existing_review = Review.objects.filter(user=request.user).first()
+
+            if existing_review:
+                # Update existing review
+                existing_review.rating = rating
+                existing_review.comment = comment
+                existing_review.save()
+                messages.success(request, "Your review has been updated successfully.")
+            else:
+                # Create a new review
+                Review.objects.create(
+                    user=request.user,
+                    rating=rating,
+                    comment=comment
+                )
+                messages.success(request, "Thank you! Your review has been submitted.")
+            
+            return redirect('review_page')
+
+    return render(request, 'review_page.html', {'reviews': reviews})

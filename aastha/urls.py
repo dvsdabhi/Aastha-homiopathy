@@ -18,4 +18,5 @@ urlpatterns = [
     path('404/', views.not_found,name='404'),
     path('blog/', views.blog_view, name='blog'),
     path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
+    path('reviews/', views.review_page, name='review_page'),
 ]

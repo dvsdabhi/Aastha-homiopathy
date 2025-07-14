@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+          <h3 class="text-center mb-4 text-primary fw-bold">Share Your Experience</h3>
+          {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+          {% endif %}
+          {% if user.is_authenticated %}
+          <form method="post">
+            {% csrf_token %}
+
+            <!-- Star Rating -->
+            <div class="mb-4 text-center">
+              <label class="form-label d-block mb-2 fw-semibold">Your Rating</label>
+              <div class="rating">
+                {% for i in "54321" %}
+                <input type="radio" name="rating" value="{{ i }}" id="star{{ i }}" required>
+                <label for="star{{ i }}">&#9733;</label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Comment -->
+            <div class="form-floating mb-4">
+              <textarea class="form-control" name="comment" placeholder="Write your review here..." style="height: 120px;" required></textarea>
+              <label>Comment</label>
+            </div>
+
+            <div class="d-grid">
+                <button id="submit-btn" type="submit" class="btn btn-primary btn-lg rounded-pill shadow">
+                    <span id="submit-text">Submit Review</span>
+                    <span id="submit-spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                </button>
+            </div>
+          </form>
+          {% else %}
+            <p class="text-center">Please <a href="{% url 'login' %}">login</a> to submit a review.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display Reviews -->
+  <div class="mt-5">
+    <h4 class="text-center mb-4">What Our Patients Say</h4>
+    {% for review in reviews %}
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="mb-1">{{ review.user.username }} 
+          <span class="text-warning">
+            {% for i in "12345"|slice:":review.rating"|make_list %}&#9733;{% endfor %}
+          </span>
+        </h5>
+        <small class="text-muted">{{ review.created_at|date:"d M Y, h:i A" }}</small>
+        <p class="mt-2">{{ review.comment }}</p>
+      </div>
+    </div>
+    {% empty %}
+      <p class="text-center">No reviews yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Star Rating CSS -->
+<style>
+.rating {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  gap: 5px;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #f7c600;
+}
+</style>
+
+<script>
+    const form = document.querySelector("form");
+    const submitBtn = document.getElementById("submit-btn");
+    const spinner = document.getElementById("submit-spinner");
+    const text = document.getElementById("submit-text");
+  
+    form.addEventListener("submit", function () {
+      submitBtn.disabled = true;
+      spinner.classList.remove("d-none");
+      text.textContent = "Submitting...";
+    });
+  </script>
+{% endblock %}
